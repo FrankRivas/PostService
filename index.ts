@@ -3,7 +3,6 @@ import { routing } from './routes'
 //create a server object:
 http
 	.createServer(async function(req, res) {
-		res.writeHead(200, { 'Content-Type': 'text/html' }) // http header
 		await routing(req, res)
 		res.end() //end the response
 	})
