@@ -11,7 +11,7 @@ export let Singleton = (function() {
 			password: 'applaudostudio',
 			port: 5432
 		})
-
+		client.connect()
 		return client
 	}
 

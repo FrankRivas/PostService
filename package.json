@@ -1,30 +1,31 @@
 {
-  "name": "postservice",
-  "version": "1.0.0",
-  "description": "Creation of CRUD of Posts",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/FrankRivas/PostService.git"
-  },
-  "author": "Frank Rivas",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/FrankRivas/PostService/issues"
-  },
-  "homepage": "https://github.com/FrankRivas/PostService#readme",
-  "dependencies": {
-    "@types/node": "^12.12.14",
-    "@types/pg": "^7.11.2",
-    "pg": "^7.14.0"
-  },
-  "devDependencies": {
-    "eslint": "^6.7.2",
-    "eslint-config-prettier": "^6.7.0",
-    "eslint-plugin-prettier": "^3.1.1",
-    "prettier": "^1.19.1"
-  }
+	"name": "postservice",
+	"version": "1.0.0",
+	"description": "Creation of CRUD of Posts",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"watch": "nodemon --watch **/*.ts --exec ts-node index.ts"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/FrankRivas/PostService.git"
+	},
+	"author": "Frank Rivas",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/FrankRivas/PostService/issues"
+	},
+	"homepage": "https://github.com/FrankRivas/PostService#readme",
+	"dependencies": {
+		"@types/node": "^12.12.14",
+		"@types/pg": "^7.11.2",
+		"pg": "^7.14.0"
+	},
+	"devDependencies": {
+		"eslint": "^6.7.2",
+		"eslint-config-prettier": "^6.7.0",
+		"eslint-plugin-prettier": "^3.1.1",
+		"prettier": "^1.19.1"
+	}
 }
