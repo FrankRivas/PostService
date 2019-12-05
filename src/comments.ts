@@ -1,21 +1,18 @@
 import * as http from 'http'
 import { Singleton } from '../helpers/conection'
 import { obtatainDataCode } from '../helpers/errorCodes'
+import { doSQLCall, insertRecord, updateRecord } from '../helpers/querieProcess'
 
 export async function getComments(
 	response: http.ServerResponse,
 	id_post: string
 ) {
-	const client = Singleton.getInstance()
-	try {
-		let res = await client.query(
-			`SELECT *
-            FROM public.comment where id_post = ${id_post}`
-		)
-		obtatainDataCode(response, 200, res.rows)
-	} catch {
-		obtatainDataCode(response, 500)
-	}
+	const query: string = `SELECT *
+	FROM public.comment where id_post = ${id_post}`
+	let res = await doSQLCall(query)
+	let statusCode = res ? 200 : 404
+	let queryResult = res ? res.rows : undefined
+	obtatainDataCode(response, statusCode, queryResult)
 }
 
 export async function createComment(
@@ -23,57 +20,32 @@ export async function createComment(
 	res: http.ServerResponse,
 	id_post: string
 ) {
-	const client = Singleton.getInstance()
-	let body: string = ''
-	try {
-		await req.on('data', function(chunk) {
-			body += chunk
-		})
-		let json = JSON.parse(body)
-		let resp = await client.query(
-			`INSERT INTO public.comment(
-                comment, user_id, id_post)
-                VALUES ('${json.comment}', ${json.user_id}, ${id_post}) RETURNING *`
-		)
-		obtatainDataCode(res, 201, resp.rows)
-	} catch {
-		obtatainDataCode(res, 500)
-	}
+	let resp = await insertRecord(req, id_post)
+	let statusCode = resp ? 201 : 400
+	let queryResult = resp ? resp.rows : undefined
+	obtatainDataCode(res, statusCode, queryResult)
 }
 
 export async function getComment(response: http.ServerResponse, param: string) {
-	const client = Singleton.getInstance()
-	try {
-		let res = await client.query(
-			`SELECT * FROM public.comment where id = ${param}`
-		)
-		if (res.rows['length'] > 0) {
-			obtatainDataCode(response, 200, res.rows)
-		} else {
-			obtatainDataCode(response, 404)
-		}
-	} catch {
-		obtatainDataCode(response, 500)
-	}
+	const query: string = `SELECT * FROM public.comment where id = ${param}`
+	let res = await doSQLCall(query)
+	let statusCode = res ? (res.rows['length'] > 0 ? 200 : 404) : 500
+	let queryResult = res
+		? res.rows['length'] > 0
+			? res.rows
+			: undefined
+		: undefined
+	obtatainDataCode(response, statusCode, queryResult)
 }
 
 export async function deleteComment(
 	response: http.ServerResponse,
 	param: string
 ) {
-	const client = Singleton.getInstance()
-	try {
-		let erased = await client.query(
-			`DELETE FROM public.comment where id = ${param}`
-		)
-		if (erased.rowCount > 0) {
-			obtatainDataCode(response, 200)
-		} else {
-			obtatainDataCode(response, 404)
-		}
-	} catch {
-		obtatainDataCode(response, 500)
-	}
+	const query: string = `DELETE FROM public.comment where id = ${param}`
+	let res = await doSQLCall(query)
+	let statusCode = res ? (res.rowCount > 0 ? 200 : 404) : 500
+	obtatainDataCode(response, statusCode)
 }
 
 export async function updateComment(
@@ -81,30 +53,8 @@ export async function updateComment(
 	res: http.ServerResponse,
 	param: string
 ) {
-	const client = Singleton.getInstance()
-	let body: string = ''
-	let query: string = 'UPDATE public.comment SET '
-	try {
-		await req.on('data', function(chunk) {
-			body += chunk
-		})
-		let json = JSON.parse(body)
-		if (json.comment !== undefined) {
-			query = query + `comment='${json.comment}'`
-		}
-		if (query.includes('comment')) {
-			let resp = await client.query(
-				query + `, updated_at=now() WHERE id = ${param} RETURNING *`
-			)
-			if (resp.rowCount === 0) {
-				obtatainDataCode(res, 404)
-			} else {
-				obtatainDataCode(res, 200, resp.rows)
-			}
-		} else {
-			obtatainDataCode(res, 400)
-		}
-	} catch {
-		obtatainDataCode(res, 500)
-	}
+	let resp = await updateRecord(req, param)
+	let statusCode = resp ? 200 : 400
+	let queryResult = resp ? resp.rows : undefined
+	obtatainDataCode(res, statusCode, queryResult)
 }
