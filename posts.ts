@@ -72,7 +72,6 @@ export async function updatePost(
 		}
 		if (query.includes('content') || query.includes('title')) {
 			let resp = await client.query(query + `WHERE id = ${param} RETURNING *`)
-			console.log(resp.rowCount)
 			if (resp.rowCount === 0) {
 				obtatainDataCode(res, 404)
 			} else {
