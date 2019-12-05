@@ -20,7 +20,8 @@ export async function getComments(
 
 export async function createComment(
 	req: http.IncomingMessage,
-	res: http.ServerResponse
+	res: http.ServerResponse,
+	id_post: string
 ) {
 	const client = Singleton.getInstance()
 	let body: string = ''
@@ -32,7 +33,7 @@ export async function createComment(
 		let resp = await client.query(
 			`INSERT INTO public.comment(
                 comment, user_id, id_post)
-                VALUES ('${json.comment}', ${json.user_id}, ${json.id_post}) RETURNING *`
+                VALUES ('${json.comment}', ${json.user_id}, ${id_post}) RETURNING *`
 		)
 		obtatainDataCode(res, 201, resp.rows)
 	} catch {

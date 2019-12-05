@@ -20,7 +20,7 @@ export async function routeComments(
 			}
 		} else if (req.method === 'POST') {
 			if (param !== null) {
-				await createComment(req, res)
+				await createComment(req, res, param[1])
 			}
 		} else {
 			obtatainDataCode(res, 405)
