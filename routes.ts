@@ -1,6 +1,7 @@
 import * as http from 'http'
 import { getPosts, getPost, deletePost, updatePost, createPost } from './posts'
 import { obtatainDataCode } from './errorCodes'
+import { routeComments } from './commentsRoutes'
 
 export async function routing(
 	req: http.IncomingMessage,
@@ -15,7 +16,7 @@ export async function routing(
 		} else {
 			obtatainDataCode(res, 405)
 		}
-	} else if (url.match(/^\/post\/([0-9]+)/)) {
+	} else if (url.match(/^\/post\/([0-9]+)$/)) {
 		let param = url.match(/^\/post\/([0-9]+)/)
 		if (req.method === 'GET') {
 			if (param !== null) {
@@ -32,5 +33,7 @@ export async function routing(
 		} else {
 			obtatainDataCode(res, 405)
 		}
+	} else {
+		await routeComments(req, res)
 	}
 }
