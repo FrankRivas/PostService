@@ -1,7 +1,7 @@
 import * as http from 'http'
-import { routePosts } from './postRoutes'
-import { obtatainDataCode } from './errorCodes'
-import { routeComments } from './commentRoutes'
+import { routePosts } from './posts'
+import { obtatainDataCode } from '../helpers/errorCodes'
+import { routeComments } from './comments'
 
 export async function routing(
 	req: http.IncomingMessage,

@@ -1,12 +1,12 @@
 import * as http from 'http'
-import { obtatainDataCode } from './errorCodes'
+import { obtatainDataCode } from '../helpers/errorCodes'
 import {
 	getComments,
 	createComment,
 	getComment,
 	deleteComment,
 	updateComment
-} from './comments'
+} from '../src/comments'
 export async function routeComments(
 	req: http.IncomingMessage,
 	res: http.ServerResponse

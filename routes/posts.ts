@@ -1,6 +1,12 @@
 import * as http from 'http'
-import { getPosts, getPost, deletePost, updatePost, createPost } from './posts'
-import { obtatainDataCode } from './errorCodes'
+import {
+	getPosts,
+	getPost,
+	deletePost,
+	updatePost,
+	createPost
+} from '../src/posts'
+import { obtatainDataCode } from '../helpers/errorCodes'
 
 export async function routePosts(
 	req: http.IncomingMessage,

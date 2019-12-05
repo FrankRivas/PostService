@@ -1,6 +1,6 @@
 import * as http from 'http'
-import { Singleton } from './conection'
-import { obtatainDataCode } from './errorCodes'
+import { Singleton } from '../helpers/conection'
+import { obtatainDataCode } from '../helpers/errorCodes'
 
 export async function getPosts(response: http.ServerResponse) {
 	const client = Singleton.getInstance()
@@ -108,3 +108,9 @@ export async function createPost(
 		obtatainDataCode(res, 500)
 	}
 }
+/*
+insertRecord(){
+	di
+}
+
+doSQLCall()*/

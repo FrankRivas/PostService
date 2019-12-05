@@ -1,5 +1,5 @@
 import * as http from 'http'
-import { routing } from './routes'
+import { routing } from './routes/handler'
 //create a server object:
 http
 	.createServer(async function(req, res) {

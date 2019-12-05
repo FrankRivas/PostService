@@ -1,6 +1,6 @@
 import * as http from 'http'
-import { Singleton } from './conection'
-import { obtatainDataCode } from './errorCodes'
+import { Singleton } from '../helpers/conection'
+import { obtatainDataCode } from '../helpers/errorCodes'
 
 export async function getComments(
 	response: http.ServerResponse,
