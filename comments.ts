@@ -29,7 +29,6 @@ export async function createComment(
 			body += chunk
 		})
 		let json = JSON.parse(body)
-		console.log(json)
 		let resp = await client.query(
 			`INSERT INTO public.comment(
                 comment, user_id, id_post)
