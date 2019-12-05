@@ -11,10 +11,13 @@ export async function routing(
 			await getPosts(req, res)
 			//let json = await getPosts(req, res)
 			//res.write(json)
-		} else {
+		} else if (req.method === 'POST') {
 			await createPost(req, res)
 			//let json = await createPost(req, res)
 			//res.write(json)
+		} else {
+			res.writeHead(405, { 'Content-Type': 'application/json' })
+			res.write(JSON.stringify({ code: 405, msg: 'Method Not Allowed' }))
 		}
 	} else if (url.match(/^\/post\/([0-9]+)/)) {
 		let param = url.match(/^\/post\/([0-9]+)/)
@@ -30,12 +33,15 @@ export async function routing(
 				//let json = await deletePost(req, res, param[1])
 				//res.write(json)
 			}
-		} else {
+		} else if (req.method === 'PUT') {
 			if (param !== null) {
 				await updatePost(req, res, param[1])
 				//let json = await updatePost(req, res, param[1])
 				//res.write(json)
 			}
+		} else {
+			res.writeHead(405, { 'Content-Type': 'application/json' })
+			res.write(JSON.stringify({ code: 405, msg: 'Method Not Allowed' }))
 		}
 	}
 }
