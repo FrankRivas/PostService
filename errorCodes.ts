@@ -3,6 +3,7 @@ import { ServerResponse } from 'http'
 enum codes {
 	'OK' = 200,
 	'Created' = 201,
+	'No Content' = 204,
 	'Bad Request' = 400,
 	'Unauthorized' = 401,
 	'Forbidden' = 403,
@@ -13,6 +14,15 @@ enum codes {
 	'Service Unavailable' = 503
 }
 
-export function obtatainDataCode(res: ServerResponse, code: number): string {
-	return ''
+export function obtatainDataCode(
+	res: ServerResponse,
+	code: number,
+	jsonData?: any
+): void {
+	res.writeHead(code, { 'Content-type': 'application/json' })
+	if (jsonData !== undefined) {
+		res.write(JSON.stringify(jsonData))
+	} else {
+		res.write(JSON.stringify({ code: code, msg: `${codes[code]}` }))
+	}
 }
